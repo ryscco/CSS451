@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TheWorld : MonoBehaviour  {
+public class TheWorld : MonoBehaviour
+{
     ScalableSphere mSelectedSphere = null;
 
     public void SelectObjectAt(GameObject obj, Vector3 p)
@@ -16,7 +17,8 @@ public class TheWorld : MonoBehaviour  {
             mSelectedSphere = o.AddComponent<ScalableSphere>();
             mSelectedSphere.SetSpherePosition(p);
         }
-        else {
+        else
+        {
             mSelectedSphere = obj.GetComponent<ScalableSphere>();
             Debug.Assert(mSelectedSphere != null);
         }
@@ -29,8 +31,13 @@ public class TheWorld : MonoBehaviour  {
             mSelectedSphere.SetSize(r);
     }
 
-    public float GetSelectedRadius() {
-        return mSelectedSphere.transform.localScale.x; // assume x,y,z are the same
+    public float GetSelectedRadius()
+    {
+        if (mSelectedSphere)
+        {
+            return mSelectedSphere.transform.localScale.x; // assume x,y,z are the same
+        }
+        else return 0f;
     }
 
     private void UnSelectCurrent()
