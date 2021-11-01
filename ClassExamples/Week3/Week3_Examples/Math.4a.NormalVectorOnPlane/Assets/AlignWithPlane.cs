@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class AlignWithPlane : MonoBehaviour
 {
     public Transform ThePlane = null;  // Notice this is the Transform, 

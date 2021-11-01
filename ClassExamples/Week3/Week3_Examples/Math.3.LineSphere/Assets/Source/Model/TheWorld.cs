@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[ExecuteInEditMode]
 public class TheWorld : MonoBehaviour  {
 
     public GameObject P1, P2;  // defines the line

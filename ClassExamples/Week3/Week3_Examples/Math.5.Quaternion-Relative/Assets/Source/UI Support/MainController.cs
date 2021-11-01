@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; // for GUI elements: Button, Toggle
-
+[ExecuteInEditMode]
 public partial class MainController : MonoBehaviour {
 
     // reference to all UI elements in the Canvas
