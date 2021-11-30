@@ -8,7 +8,7 @@ public class SceneNodeControl : MonoBehaviour {
     public SceneNode TheRoot = null;
     public XfromControl XformControl = null;
 
-    const string kChildSpace = "  ";
+    const string kChildSpace = ">";
     List<Dropdown.OptionData> mSelectMenuOptions = new List<Dropdown.OptionData>();
     List<Transform> mSelectedTransform = new List<Transform>();    
 
@@ -24,7 +24,7 @@ public class SceneNodeControl : MonoBehaviour {
         TheMenu.AddOptions(mSelectMenuOptions);
         TheMenu.onValueChanged.AddListener(SelectionChange);
 
-        XformControl.SetSelectedObject(TheRoot.transform);
+        XformControl.SetSelectedObjectInit(TheRoot.transform);
     }
 
     void GetChildrenNames(string blanks, Transform node)

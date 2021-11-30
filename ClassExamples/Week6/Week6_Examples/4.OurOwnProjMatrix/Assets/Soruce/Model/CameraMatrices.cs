@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 public class CameraMatrices: MonoBehaviour {
     
     public enum ViewMatrixMode {

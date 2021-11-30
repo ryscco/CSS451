@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class XfromControl : MonoBehaviour {
+public class XfromControl : MonoBehaviour
+{
     public Toggle T, R, S;
     public SliderWithEcho X, Y, Z;
     public Text ObjectName;
@@ -11,8 +12,9 @@ public class XfromControl : MonoBehaviour {
     private Transform mSelected;
     private Vector3 mPreviousSliderValues = Vector3.zero;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         T.onValueChanged.AddListener(SetToTranslation);
         R.onValueChanged.AddListener(SetToRotation);
         S.onValueChanged.AddListener(SetToScaling);
@@ -24,8 +26,8 @@ public class XfromControl : MonoBehaviour {
         R.isOn = false;
         S.isOn = false;
         SetToTranslation(true);
-	}
-	
+    }
+
     //---------------------------------------------------------------------------------
     // Initialize slider bars to specific function
     void SetToTranslation(bool v)
@@ -50,9 +52,9 @@ public class XfromControl : MonoBehaviour {
     {
         Vector3 r = ReadObjectXfrom();
         mPreviousSliderValues = r;
-        X.InitSliderRange(-180, 180, r.x);
-        Y.InitSliderRange(-180, 180, r.y);
-        Z.InitSliderRange(-180, 180, r.z);
+        X.InitSliderRange(-179.9f, 179.9f, r.x);
+        Y.InitSliderRange(-179.9f, 179.9f, r.y);
+        Z.InitSliderRange(-179.9f, 179.9f, r.z);
         mPreviousSliderValues = r;
     }
     //---------------------------------------------------------------------------------
@@ -63,31 +65,31 @@ public class XfromControl : MonoBehaviour {
     {
         Vector3 p = ReadObjectXfrom();
         // if not in rotation, next two lines of work would be wasted
-            float dx = v - mPreviousSliderValues.x;
-            mPreviousSliderValues.x = v;
-            Quaternion q = Quaternion.AngleAxis(dx, Vector3.right);
+        float dx = v - mPreviousSliderValues.x;
+        mPreviousSliderValues.x = v;
+        Quaternion q = Quaternion.AngleAxis(dx, Vector3.right);
         p.x = v;
         UISetObjectXform(ref p, ref q);
     }
-    
+
     void YValueChanged(float v)
     {
         Vector3 p = ReadObjectXfrom();
-            // if not in rotation, next two lines of work would be wasted
-            float dy = v - mPreviousSliderValues.y;
-            mPreviousSliderValues.y = v;
-            Quaternion q = Quaternion.AngleAxis(dy, Vector3.up);
-        p.y = v;        
+        // if not in rotation, next two lines of work would be wasted
+        float dy = v - mPreviousSliderValues.y;
+        mPreviousSliderValues.y = v;
+        Quaternion q = Quaternion.AngleAxis(dy, Vector3.up);
+        p.y = v;
         UISetObjectXform(ref p, ref q);
     }
 
     void ZValueChanged(float v)
     {
         Vector3 p = ReadObjectXfrom();
-            // if not in rotation, next two lines of work would be wasterd
-            float dz = v - mPreviousSliderValues.z;
-            mPreviousSliderValues.z = v;
-            Quaternion q = Quaternion.AngleAxis(dz, Vector3.forward);
+        // if not in rotation, next two lines of work would be wasterd
+        float dz = v - mPreviousSliderValues.z;
+        mPreviousSliderValues.z = v;
+        Quaternion q = Quaternion.AngleAxis(dz, Vector3.forward);
         p.z = v;
         UISetObjectXform(ref p, ref q);
     }
@@ -96,7 +98,10 @@ public class XfromControl : MonoBehaviour {
     // new object selected
     public void SetSelectedObject(Transform xform)
     {
+
+        mSelected.GetComponent<SceneNode>().IsSelectedNode = false;
         mSelected = xform;
+        mSelected.GetComponent<SceneNode>().IsSelectedNode = true;
         mPreviousSliderValues = Vector3.zero;
         if (xform != null)
             ObjectName.text = "Selected:" + xform.name;
@@ -104,7 +109,17 @@ public class XfromControl : MonoBehaviour {
             ObjectName.text = "Selected: none";
         ObjectSetUI();
     }
-
+    public void SetSelectedObjectInit(Transform xform)
+    {
+        mSelected = xform;
+        mSelected.GetComponent<SceneNode>().IsSelectedNode = true;
+        mPreviousSliderValues = Vector3.zero;
+        if (xform != null)
+            ObjectName.text = "Selected:" + xform.name;
+        else
+            ObjectName.text = "Selected: none";
+        ObjectSetUI();
+    }
     public void ObjectSetUI()
     {
         Vector3 p = ReadObjectXfrom();
@@ -116,7 +131,7 @@ public class XfromControl : MonoBehaviour {
     private Vector3 ReadObjectXfrom()
     {
         Vector3 p;
-        
+
         if (T.isOn)
         {
             if (mSelected != null)
@@ -150,7 +165,8 @@ public class XfromControl : MonoBehaviour {
         else if (S.isOn)
         {
             mSelected.localScale = p;
-        } else
+        }
+        else
         {
             mSelected.localRotation *= q;
         }
